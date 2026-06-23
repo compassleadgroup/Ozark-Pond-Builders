@@ -1,0 +1,18 @@
+# build output
+dist/
+.astro/
+
+# dependencies
+node_modules/
+
+# local Claude settings (not shared)
+.claude/settings.local.json
+
+# logs and env
+*.log
+.env
+.env.*
+!.env.example
+
+# os
+.DS_Store
