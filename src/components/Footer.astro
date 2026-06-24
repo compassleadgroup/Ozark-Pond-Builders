@@ -5,6 +5,12 @@ import { SITE, telHref } from '../config';
 const disclaimer =
   'Ozark Pond Builders is operated by Compass Camper LLC, doing business as Compass Lead Group. We are a lead referral and matching service and do not perform construction work. All pond, lake, dam, and excavation work is performed by independent, licensed contractors. Contacting us connects you with one of those contractors.';
 
+// Disclosure strip, verbatim from COMPLIANCE.md. Moved here from the header per
+// the operator's request. Note: COMPLIANCE.md specifies this above the fold at
+// the top of every page; placement in the footer is a deliberate chat override.
+const disclosure =
+  'Ozark Pond Builders is a free matching service, not a contractor. We connect southwest Missouri landowners with independent, licensed local pond and excavation professionals.';
+
 const year = new Date().getFullYear();
 
 const services = [
@@ -34,6 +40,13 @@ const company = [
 ---
 
 <footer class="mt-16 border-t border-stone-200 bg-stone-100 text-sm text-stone-700">
+  {/* Disclosure strip (white background, smaller text), moved from the header */}
+  <div class="bg-white border-b border-stone-200">
+    <p class="mx-auto max-w-5xl px-4 py-2 text-center text-[11px] leading-relaxed text-stone-600 sm:text-xs">
+      {disclosure}
+    </p>
+  </div>
+
   <div class="mx-auto max-w-6xl px-4 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
     <div>
       <p class="font-bold text-emerald-900">Ozark Pond Builders</p>
