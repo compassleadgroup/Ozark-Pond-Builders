@@ -1,0 +1,25 @@
+---
+import { SITE, AREA_COUNTIES } from '../config';
+
+// Service JSON-LD for service pages. areaServed is the five county cluster.
+interface Props {
+  serviceType: string;
+}
+const { serviceType } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType,
+  provider: {
+    '@type': 'Organization',
+    name: SITE.brand,
+    url: SITE.url,
+  },
+  areaServed: AREA_COUNTIES.map((name) => ({
+    '@type': 'AdministrativeArea',
+    name,
+  })),
+};
+---
+<script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />

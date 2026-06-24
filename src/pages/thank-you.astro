@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Thank You | Ozark Pond Builders"
+  description="Your inquiry was received. We will connect you with one licensed local pond and excavation contractor."
+  path="/thank-you/"
+  noindex={true}
+>
+  <div class="mx-auto max-w-2xl px-4 py-20 text-center">
+    <h1 class="text-3xl sm:text-4xl font-bold text-stone-900">Thank you. Your inquiry is in.</h1>
+    <p class="mt-5 text-lg leading-relaxed text-stone-700">
+      We received your project details and will connect you with one licensed local pond and excavation contractor who can scope and quote the work. Watch for a call, text, or email.
+    </p>
+    <p class="mt-3 text-stone-600">
+      Ozark Pond Builders is a free matching service, not a contractor. The work is performed by the independent, licensed contractor you are matched with.
+    </p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="/" class="rounded-md bg-emerald-800 px-5 py-3 font-semibold text-white hover:bg-emerald-700">Back to home</a>
+      <a href="/guides/missouri-pond-permit-guide/" class="rounded-md border border-stone-300 px-5 py-3 font-semibold text-stone-800 hover:bg-stone-100">Read the permit guide</a>
+    </div>
+  </div>
+</BaseLayout>

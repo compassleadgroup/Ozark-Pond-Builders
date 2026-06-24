@@ -1,0 +1,129 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnswerBlock from '../components/AnswerBlock.astro';
+import MatchSteps from '../components/MatchSteps.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+
+const services = (await getCollection('services')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const cardBlurb: Record<string, string> = {
+  'farm-and-stock-pond-construction':
+    'Livestock, stock, and irrigation ponds, matched to a licensed local contractor.',
+  'recreational-lake-construction':
+    'Fishing ponds and recreational lakes, planned with the Section 404 question in mind.',
+  'pond-dredging-and-renovation':
+    'Restore depth, fix leaks, and rebuild aging dams and spillways.',
+  'dam-construction-and-repair':
+    'Planned, engineered dam construction and repair, framed around the 35 foot rule.',
+};
+
+const faq = [
+  {
+    q: 'Does Ozark Pond Builders build the pond?',
+    a: 'No. We are a free matching service, not a contractor. We connect you with one licensed local pond and excavation contractor who performs the work. All construction is done by independent, licensed professionals.',
+  },
+  {
+    q: 'What does the matching service cost me?',
+    a: 'Nothing. The service is free for landowners. We are paid a referral fee by the contractor we match you with, and it never increases the price you pay for your project. See how we make money.',
+  },
+  {
+    q: 'Where do you connect landowners with contractors?',
+    a: 'Across southwest Missouri: Greene, Christian, Webster, Polk, and Dallas counties, including towns like Marshfield, Rogersville, Ozark, Republic, Buffalo, Bolivar, and Nixa.',
+  },
+  {
+    q: 'Do I need a permit to build a pond in Missouri?',
+    a: "Most private farm ponds sit below Missouri's 35 foot dam height threshold, so they typically do not need a state dam safety permit. A federal Section 404 permit can apply if the pond affects a stream or wetland, though many farm and stock ponds are exempt under Section 404(f). Our Missouri pond permit guide explains it.",
+  },
+];
+---
+
+<BaseLayout
+  title="Pond Builders in Southwest Missouri | Ozark Pond Builders"
+  description="Ozark Pond Builders is a free matching service connecting southwest Missouri landowners with licensed local pond and excavation contractors for farm ponds, recreational lakes, dredging, and dam work."
+  path="/"
+  schemas={[]}
+>
+  <!-- Hero -->
+  <section class="bg-gradient-to-b from-emerald-900 to-emerald-800 text-white">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:py-20">
+      <p class="text-emerald-200 font-medium">Southwest Missouri pond and excavation matching service</p>
+      <h1 class="mt-3 max-w-3xl text-3xl sm:text-5xl font-bold leading-tight">
+        Pond builders in southwest Missouri, matched to your project
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-emerald-50 leading-relaxed">
+        We connect Ozarks landowners with licensed local pond and excavation contractors for farm ponds, recreational lakes, dredging, and dam work. Free for landowners.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/contact/" class="rounded-md bg-white px-6 py-3 font-semibold text-emerald-900 hover:bg-emerald-50">
+          Get matched
+        </a>
+        <a href="/guides/missouri-pond-permit-guide/" class="rounded-md border border-emerald-300 px-6 py-3 font-semibold text-white hover:bg-emerald-700">
+          Read the Missouri permit guide
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl px-4">
+    <!-- Answer block -->
+    <section class="-mt-8 sm:-mt-10 relative">
+      <AnswerBlock text="Ozark Pond Builders is a free matching service that connects southwest Missouri landowners with licensed local pond and excavation contractors. Tell us about your project and we connect you with one vetted contractor who handles farm and stock ponds, recreational lakes, dredging and renovation, and engineered dam work across Greene, Christian, Webster, Polk, and Dallas counties. Most private ponds in this region sit below Missouri's 35 foot dam permit threshold, so many qualifying projects can move forward without a state dam safety permit." />
+    </section>
+
+    <!-- Services -->
+    <section class="mt-16" aria-labelledby="services-heading">
+      <h2 id="services-heading" class="text-2xl font-bold text-stone-900">What we connect you with</h2>
+      <p class="mt-2 text-stone-700">Four kinds of pond and excavation work, each matched to a licensed local contractor.</p>
+      <div class="mt-6 grid gap-6 sm:grid-cols-2">
+        {services.map((s) => (
+          <a href={`/services/${s.id}/`} class="block rounded-lg border border-stone-200 bg-white p-6 hover:border-emerald-400 hover:shadow-sm">
+            <h3 class="font-semibold text-emerald-900">{s.data.serviceType}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-stone-700">{cardBlurb[s.id] ?? s.data.description}</p>
+            <p class="mt-3 text-sm font-semibold text-emerald-800">Learn more</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- How matching works -->
+    <section class="mt-16">
+      <MatchSteps />
+    </section>
+
+    <!-- Local knowledge -->
+    <section class="mt-16 grid gap-8 lg:grid-cols-2">
+      <div>
+        <h2 class="text-2xl font-bold text-stone-900">Local knowledge that thin sites skip</h2>
+        <p class="mt-3 leading-relaxed text-stone-700">
+          A pond in the Ozarks is a regulatory and soils project as much as an earthmoving one. Our guides lay out Missouri's 35 foot dam rule, the federal Section 404 trigger and the farm pond exemption, how to size a watershed, and why many local sites need a clay core or liner to hold water. It is honest, sourced, and useful before you ever fill out a form.
+        </p>
+        <ul class="mt-4 space-y-2 text-emerald-800">
+          <li><a class="font-medium hover:underline" href="/guides/missouri-pond-permit-guide/">Missouri pond permit guide</a></li>
+          <li><a class="font-medium hover:underline" href="/guides/pond-watershed-sizing/">Pond watershed sizing</a></li>
+          <li><a class="font-medium hover:underline" href="/guides/will-my-pond-hold-water/">Will my pond hold water</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold text-stone-900">Where we work</h2>
+        <p class="mt-3 leading-relaxed text-stone-700">
+          We focus on the rural county cluster of southwest Missouri, where the ponds are dug and the work gets done: Greene, Christian, Webster, Polk, and Dallas counties.
+        </p>
+        <p class="mt-4">
+          <a class="font-semibold text-emerald-800 hover:underline" href="/locations/">See the service area</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <Faq items={faq} />
+
+    <!-- Closing CTA -->
+    <section class="my-16">
+      <CtaBand />
+    </section>
+  </div>
+</BaseLayout>

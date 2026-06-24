@@ -1,0 +1,95 @@
+---
+import { SITE } from '../config';
+
+// Lead form. Posts to Web3Forms (no backend). Includes the unchecked TCPA
+// consent checkbox with the verbatim consent text and a privacy link.
+//
+// TODO: CONFIG. Set SITE.web3formsKey before launch. Until it is set, the form
+// renders but submissions will not be delivered.
+interface Props {
+  heading?: string;
+  intro?: string;
+  defaultProjectType?: string;
+}
+const { heading = 'Get matched with a local contractor', intro, defaultProjectType } = Astro.props;
+
+// Verbatim TCPA consent text from COMPLIANCE.md (with the Privacy Policy linked).
+const projectTypes = [
+  'Farm or stock pond construction',
+  'Recreational lake construction',
+  'Pond dredging or renovation',
+  'Dam construction or engineered repair',
+  'Not sure yet',
+];
+
+const fieldCls =
+  'mt-1 block w-full rounded-md border-stone-300 shadow-sm focus:border-emerald-600 focus:ring-emerald-600';
+---
+<section aria-labelledby="leadform-heading" class="rounded-xl border border-stone-200 bg-white p-6 sm:p-8 shadow-sm">
+  <h2 id="leadform-heading" class="text-2xl font-bold text-stone-900">{heading}</h2>
+  {intro && <p class="mt-2 text-stone-700">{intro}</p>}
+  <p class="mt-2 text-sm text-stone-600">
+    Free for landowners. Tell us about your project and we connect you with one licensed local contractor who can scope and quote it.
+  </p>
+
+  <form action="https://api.web3forms.com/submit" method="POST" class="mt-6 space-y-5">
+    {/* Web3Forms hidden fields */}
+    <input type="hidden" name="access_key" value={SITE.web3formsKey} />
+    <input type="hidden" name="subject" value="New pond project inquiry from ozarkpondbuilders.com" />
+    <input type="hidden" name="from_name" value="Ozark Pond Builders" />
+    <input type="hidden" name="redirect" value={`${SITE.url}/thank-you/`} />
+    {/* Honeypot spam trap (kept off screen for humans) */}
+    <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div>
+        <label for="lf-name" class="block text-sm font-medium text-stone-800">Name</label>
+        <input id="lf-name" name="name" type="text" required autocomplete="name" class={fieldCls} />
+      </div>
+      <div>
+        <label for="lf-phone" class="block text-sm font-medium text-stone-800">Phone</label>
+        <input id="lf-phone" name="phone" type="tel" autocomplete="tel" class={fieldCls} />
+      </div>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div>
+        <label for="lf-email" class="block text-sm font-medium text-stone-800">Email</label>
+        <input id="lf-email" name="email" type="email" required autocomplete="email" class={fieldCls} />
+      </div>
+      <div>
+        <label for="lf-location" class="block text-sm font-medium text-stone-800">Project location (town or county)</label>
+        <input id="lf-location" name="project_location" type="text" placeholder="e.g. Ozark, Christian County" class={fieldCls} />
+      </div>
+    </div>
+
+    <div>
+      <label for="lf-type" class="block text-sm font-medium text-stone-800">Project type</label>
+      <select id="lf-type" name="project_type" class={fieldCls}>
+        {projectTypes.map((t) => (
+          <option value={t} selected={defaultProjectType === t}>{t}</option>
+        ))}
+      </select>
+    </div>
+
+    <div>
+      <label for="lf-details" class="block text-sm font-medium text-stone-800">Brief description</label>
+      <textarea id="lf-details" name="project_details" rows="4" placeholder="Pond size, goals (livestock, fishing, irrigation, recreation), timeline, anything useful." class={fieldCls}></textarea>
+    </div>
+
+    {/* TCPA consent: unchecked by default, never pre-checked, not a condition of submitting. */}
+    <div class="flex items-start gap-3 rounded-md bg-stone-50 p-4">
+      <input id="lf-consent" name="tcpa_consent" type="checkbox" value="I consent to be contacted" class="mt-1 h-5 w-5 rounded border-stone-400 text-emerald-700 focus:ring-emerald-600" />
+      <label for="lf-consent" class="text-sm leading-relaxed text-stone-700">
+        By checking this box and submitting this form, I agree that Ozark Pond Builders and the contractor I am matched with may contact me at the phone number and email I provided, including by automated dialing system, prerecorded voice, text message, and email, about my pond or excavation project. Consent is not a condition of any purchase or service. Message and data rates may apply. I can opt out at any time. I have read the <a href="/privacy/" class="text-emerald-800 underline">Privacy Policy</a>.
+      </label>
+    </div>
+
+    <button type="submit" class="w-full rounded-md bg-emerald-800 px-5 py-3 font-semibold text-white hover:bg-emerald-700 sm:w-auto">
+      Request my match
+    </button>
+    <p class="text-xs text-stone-500">
+      We share your details with one licensed local contractor so they can contact and quote your project. We do not sell your information. See our <a href="/privacy/" class="underline">Privacy Policy</a>.
+    </p>
+  </form>
+</section>

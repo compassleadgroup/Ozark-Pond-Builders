@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaBand from '../components/CtaBand.astro';
+---
+
+<BaseLayout
+  title="How We Make Money | Ozark Pond Builders"
+  description="Ozark Pond Builders is free for landowners. We are paid a referral fee by the contractor we match you with, and it never increases the price you pay for your project."
+  path="/how-we-make-money/"
+>
+  <div class="mx-auto max-w-3xl px-4 py-10">
+    <Breadcrumbs items={[{ name: 'Home', path: '/' }, { name: 'How we make money', path: '/how-we-make-money/' }]} />
+
+    <h1 class="mt-6 text-3xl sm:text-4xl font-bold text-stone-900">How we make money</h1>
+
+    <div class="mt-6 rounded-lg border border-emerald-200 bg-emerald-50 p-5 sm:p-6">
+      <p class="text-base sm:text-lg leading-relaxed text-stone-800">
+        Ozark Pond Builders is free for landowners. We are paid a referral fee by the contractor we match you with. This fee never increases the price you pay for your project.
+      </p>
+    </div>
+
+    <div class="prose prose-stone mt-8 max-w-none prose-a:text-emerald-800">
+      <h2>Plain language</h2>
+      <p>
+        We are a lead referral and matching service. When you submit an inquiry, we connect you with one local pond and excavation contractor. That contractor pays us a referral fee for the introduction. You do not pay us anything, and the fee does not get added to your project price.
+      </p>
+
+      <h2>Why we are transparent about it</h2>
+      <p>
+        Plenty of lead sites hide the fact that they are paid to send your information somewhere. We would rather say it clearly. Knowing how a service is paid helps you judge it. Our incentive is to connect you with a contractor who does good work, because the model only works long term if landowners and contractors both find it worthwhile.
+      </p>
+
+      <h2>What this means for you</h2>
+      <ul>
+        <li>The matching service costs you nothing.</li>
+        <li>The referral fee is paid by the contractor, not added to your quote.</li>
+        <li>Your contract, scope, and price are between you and the contractor.</li>
+        <li>We do not sell your information to multiple buyers. We connect you with one contractor for your project. See our <a href="/privacy/">Privacy Policy</a>.</li>
+      </ul>
+    </div>
+
+    <section class="mt-12">
+      <CtaBand />
+    </section>
+  </div>
+</BaseLayout>

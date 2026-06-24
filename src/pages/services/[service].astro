@@ -1,0 +1,93 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AnswerBlock from '../../components/AnswerBlock.astro';
+import ServiceSchema from '../../components/ServiceSchema.astro';
+import Faq from '../../components/Faq.astro';
+import LeadForm from '../../components/LeadForm.astro';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((entry) => ({
+    params: { service: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+// Build guide title lookup for related links.
+const guides = await getCollection('guides');
+const guideTitle = new Map(guides.map((g) => [g.id, g.data.h1]));
+
+// Other services for internal cross linking.
+const otherServices = (await getCollection('services'))
+  .filter((s) => s.id !== entry.id)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const path = `/services/${entry.id}/`;
+---
+
+<BaseLayout title={d.title} description={d.description} path={path}>
+  <ServiceSchema serviceType={d.serviceType} />
+
+  <div class="mx-auto max-w-3xl px-4 py-10">
+    <Breadcrumbs
+      items={[
+        { name: 'Home', path: '/' },
+        { name: d.serviceType, path },
+      ]}
+    />
+
+    <h1 class="mt-6 text-3xl sm:text-4xl font-bold text-stone-900">{d.h1}</h1>
+
+    <div class="mt-6">
+      <AnswerBlock text={d.answer} />
+    </div>
+
+    <div class="prose prose-stone mt-8 max-w-none prose-a:text-emerald-800">
+      <Content />
+    </div>
+
+    <Faq items={d.faq} />
+
+    {d.relatedGuides.length > 0 && (
+      <section class="mt-12">
+        <h2 class="text-xl font-bold text-stone-900">Related guides</h2>
+        <ul class="mt-4 space-y-2">
+          {d.relatedGuides.map((slug) => (
+            <li>
+              <a class="text-emerald-800 hover:underline" href={`/guides/${slug}/`}>
+                {guideTitle.get(slug) ?? slug}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="mt-12">
+      <h2 class="text-xl font-bold text-stone-900">Other services</h2>
+      <ul class="mt-4 space-y-2">
+        {otherServices.map((s) => (
+          <li>
+            <a class="text-emerald-800 hover:underline" href={`/services/${s.id}/`}>{s.data.serviceType}</a>
+          </li>
+        ))}
+        <li><a class="text-emerald-800 hover:underline" href="/locations/">See our service area</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-12">
+      <LeadForm defaultProjectType={
+        entry.id === 'recreational-lake-construction' ? 'Recreational lake construction'
+        : entry.id === 'pond-dredging-and-renovation' ? 'Pond dredging or renovation'
+        : entry.id === 'dam-construction-and-repair' ? 'Dam construction or engineered repair'
+        : 'Farm or stock pond construction'
+      } />
+    </section>
+  </div>
+</BaseLayout>

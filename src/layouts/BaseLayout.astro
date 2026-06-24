@@ -1,0 +1,80 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string; // canonical path, with leading and trailing slash, e.g. '/services/'
+  schemas?: Record<string, unknown>[]; // extra JSON-LD beyond Organization
+  noindex?: boolean;
+}
+
+const { title, description, path, schemas = [], noindex = false } = Astro.props;
+
+const canonical = SITE.url + path;
+
+// Organization JSON-LD is rendered on every page (see docs/seo-spec.md).
+const orgSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE.brand,
+  url: SITE.url,
+  description: SITE.description,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
+    areaServed: 'US-MO',
+    availableLanguage: 'English',
+    ...(SITE.phone ? { telephone: SITE.phone } : {}),
+    ...(SITE.email ? { email: SITE.email } : {}),
+  },
+};
+
+const allSchemas = [orgSchema, ...schemas];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {/* TODO: CONFIG. Google Search Console verification renders only when GSC_VERIFICATION is set. */}
+    {SITE.gscVerification && (
+      <meta name="google-site-verification" content={SITE.gscVerification} />
+    )}
+
+    {/* Tailwind via CDN (Play CDN with the forms and typography plugins). No build step. */}
+    <script is:inline src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+    {/* TODO: CONFIG. GA4 renders only when GA4_MEASUREMENT_ID is set. */}
+    {SITE.ga4Id && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${SITE.ga4Id}`}></script>
+        <script is:inline set:html={`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${SITE.ga4Id}');`}></script>
+      </>
+    )}
+
+    {allSchemas.map((schema) => (
+      <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+    ))}
+  </head>
+  <body class="min-h-screen flex flex-col bg-stone-50 text-stone-800 antialiased">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:rounded focus:bg-emerald-800 focus:px-3 focus:py-2 focus:text-white">Skip to content</a>
+    <Header />
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

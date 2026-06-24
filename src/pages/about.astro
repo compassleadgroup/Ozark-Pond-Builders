@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { SITE } from '../config';
+---
+
+<BaseLayout
+  title="About Ozark Pond Builders | Free Matching Service"
+  description="Ozark Pond Builders is a free matching service that connects southwest Missouri landowners with licensed local pond and excavation contractors. We are not a contractor."
+  path="/about/"
+>
+  <div class="mx-auto max-w-3xl px-4 py-10">
+    <Breadcrumbs items={[{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }]} />
+
+    <h1 class="mt-6 text-3xl sm:text-4xl font-bold text-stone-900">About Ozark Pond Builders</h1>
+
+    <div class="prose prose-stone mt-8 max-w-none prose-a:text-emerald-800">
+      <p>
+        Ozark Pond Builders is a free matching service. We connect landowners in southwest Missouri with licensed local pond and excavation contractors. We are not a contractor, and we do not perform construction work. All pond, lake, dam, and excavation work is performed by independent, licensed professionals.
+      </p>
+
+      <h2>What we do</h2>
+      <p>
+        Planning a pond is a research heavy decision. Most landowners spend weeks understanding permits, soils, watershed, and cost before they ever talk to a contractor. We make that easier in two ways. First, we publish honest, sourced guidance on the rules and the regional realities that actually affect a pond in the Ozarks. Second, when you are ready, we connect you with one licensed local contractor who can scope and quote the work.
+      </p>
+
+      <h2>What we are not</h2>
+      <p>
+        We do not own equipment, employ crews, or build ponds. We do not present other companies' projects as our own. We do not publish reviews, ratings, or testimonials, because we are a matching service and inventing those would be dishonest. Our value is accurate local content and a clean connection to a real local contractor.
+      </p>
+
+      <h2>Who operates the site</h2>
+      <p>
+        Ozark Pond Builders is operated by {SITE.legalEntity}. It is a lead referral and matching service. Contacting us connects you with one independent, licensed contractor who handles the kind of project you describe.
+      </p>
+
+      <h2>How we are paid</h2>
+      <p>
+        The service is free for landowners. We are paid a referral fee by the contractor we match you with, and it never increases the price you pay. We explain this in full on our <a href="/how-we-make-money/">how we make money</a> page, and we describe our selection approach on <a href="/how-we-vet-contractors/">how we vet contractors</a>.
+      </p>
+    </div>
+
+    <section class="mt-12">
+      <CtaBand />
+    </section>
+  </div>
+</BaseLayout>

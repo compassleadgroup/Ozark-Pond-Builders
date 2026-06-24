@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found | Ozark Pond Builders"
+  description="The page you were looking for could not be found."
+  path="/404/"
+  noindex={true}
+>
+  <div class="mx-auto max-w-2xl px-4 py-20 text-center">
+    <h1 class="text-3xl sm:text-4xl font-bold text-stone-900">Page not found</h1>
+    <p class="mt-5 text-lg leading-relaxed text-stone-700">
+      We could not find that page. It may have moved. Try one of these instead.
+    </p>
+    <ul class="mt-6 space-y-2">
+      <li><a class="text-emerald-800 hover:underline" href="/">Home</a></li>
+      <li><a class="text-emerald-800 hover:underline" href="/locations/">Service area</a></li>
+      <li><a class="text-emerald-800 hover:underline" href="/guides/missouri-pond-permit-guide/">Missouri pond permit guide</a></li>
+      <li><a class="text-emerald-800 hover:underline" href="/contact/">Get matched</a></li>
+    </ul>
+  </div>
+</BaseLayout>

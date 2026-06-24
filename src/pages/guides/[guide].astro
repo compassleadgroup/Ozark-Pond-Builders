@@ -1,0 +1,101 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AnswerBlock from '../../components/AnswerBlock.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { publishedCountySlugs, countyUrl } from '../../lib/links';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((entry) => ({
+    params: { guide: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const services = await getCollection('services');
+const serviceType = new Map(services.map((s) => [s.id, s.data.serviceType]));
+
+const guides = await getCollection('guides');
+const guideTitle = new Map(guides.map((g) => [g.id, g.data.h1]));
+const counties = await getCollection('counties');
+const countyName = new Map(counties.map((c) => [c.id, c.data.name]));
+const publishedCounties = await publishedCountySlugs();
+
+const path = `/guides/${entry.id}/`;
+---
+
+<BaseLayout title={d.title} description={d.description} path={path}>
+  <div class="mx-auto max-w-3xl px-4 py-10">
+    <Breadcrumbs
+      items={[
+        { name: 'Home', path: '/' },
+        { name: 'Guides', path: '/guides/missouri-pond-permit-guide/' },
+        { name: d.h1, path },
+      ]}
+    />
+
+    <h1 class="mt-6 text-3xl sm:text-4xl font-bold text-stone-900">{d.h1}</h1>
+    {d.pillar && <p class="mt-2 text-sm font-medium uppercase tracking-wide text-emerald-700">Pillar guide</p>}
+
+    <div class="mt-6">
+      <AnswerBlock text={d.answer} />
+    </div>
+
+    <div class="prose prose-stone mt-8 max-w-none prose-a:text-emerald-800">
+      <Content />
+    </div>
+
+    <Faq items={d.faq} />
+
+    <!-- Interlinks: one service, one county (or hub fallback), related guides, up to the pillar -->
+    <section class="mt-12 border-t border-stone-200 pt-8">
+      <h2 class="text-xl font-bold text-stone-900">Keep going</h2>
+      <ul class="mt-4 space-y-2">
+        {d.relatedService && (
+          <li>
+            <a class="text-emerald-800 hover:underline" href={`/services/${d.relatedService}/`}>
+              Service: {serviceType.get(d.relatedService) ?? d.relatedService}
+            </a>
+          </li>
+        )}
+        {d.relatedCounty && (
+          <li>
+            <a class="text-emerald-800 hover:underline" href={countyUrl(d.relatedCounty, publishedCounties)}>
+              {publishedCounties.has(d.relatedCounty)
+                ? `Pond builders in ${countyName.get(d.relatedCounty) ?? d.relatedCounty}`
+                : 'See our service area'}
+            </a>
+          </li>
+        )}
+        {d.relatedGuides.map((slug) => (
+          <li><a class="text-emerald-800 hover:underline" href={`/guides/${slug}/`}>{guideTitle.get(slug) ?? slug}</a></li>
+        ))}
+        {!d.pillar && (
+          <li><a class="text-emerald-800 hover:underline" href="/guides/missouri-pond-permit-guide/">Start with the Missouri pond permit guide</a></li>
+        )}
+      </ul>
+    </section>
+
+    {d.leadCapture ? (
+      <section class="mt-12">
+        <CtaBand />
+      </section>
+    ) : (
+      <section class="mt-12 rounded-lg border border-stone-200 bg-stone-100 p-6">
+        <p class="text-stone-700">
+          This is an informational guide. When you are ready to plan a real project, see our
+          <a class="text-emerald-800 underline" href="/services/farm-and-stock-pond-construction/"> services</a>
+          or
+          <a class="text-emerald-800 underline" href="/contact/"> get matched with a local contractor</a>.
+        </p>
+      </section>
+    )}
+  </div>
+</BaseLayout>

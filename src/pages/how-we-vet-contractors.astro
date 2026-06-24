@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaBand from '../components/CtaBand.astro';
+---
+
+<BaseLayout
+  title="How We Vet Contractors | Ozark Pond Builders"
+  description="How Ozark Pond Builders selects the local pond and excavation contractor we match you with, what licensed and insured means, and what you should still confirm yourself."
+  path="/how-we-vet-contractors/"
+>
+  <div class="mx-auto max-w-3xl px-4 py-10">
+    <Breadcrumbs items={[{ name: 'Home', path: '/' }, { name: 'How we vet contractors', path: '/how-we-vet-contractors/' }]} />
+
+    <h1 class="mt-6 text-3xl sm:text-4xl font-bold text-stone-900">How we vet contractors</h1>
+
+    <div class="prose prose-stone mt-8 max-w-none prose-a:text-emerald-800">
+      <p>
+        We want to be plain about what our matching service does and does not do. We connect you with one local pond and excavation contractor. We are honest about our selection approach rather than claiming a process we do not run.
+      </p>
+
+      <h2>What we look for</h2>
+      <p>
+        When we choose the contractor we match landowners with in this county cluster, we look for:
+      </p>
+      <ul>
+        <li>A contractor licensed and insured for pond and excavation work, as applicable to the project and locale.</li>
+        <li>A local operator who works in the southwest Missouri counties we cover and knows the regional soils and terrain.</li>
+        <li>Experience with the kind of project at hand, whether that is a farm pond, a recreational lake, dredging and renovation, or dam work.</li>
+        <li>The equipment and capacity to take on the size of project a landowner describes.</li>
+      </ul>
+
+      <h2>What licensed and insured means here</h2>
+      <p>
+        Pond and excavation work in Missouri is not governed by a single statewide contractor license, so requirements depend on the locality and the scope of work. Larger dams (35 feet and higher) require design by a Missouri registered professional engineer under state dam safety law. When we describe a contractor as licensed and insured, we mean they hold the licensing applicable to their work and carry their own liability insurance. We do not provide that insurance, and we are not a party to your contract with the contractor.
+      </p>
+
+      <h2>What you should still confirm</h2>
+      <p>
+        Because this is a high value project, we encourage every landowner to verify a contractor's credentials directly before signing anything:
+      </p>
+      <ul>
+        <li>Ask for current proof of liability insurance and any applicable local licensing.</li>
+        <li>Ask for references on similar local projects.</li>
+        <li>Get the scope, permits responsibility, and price in writing.</li>
+        <li>For taller dams, confirm a Missouri registered professional engineer is involved where required.</li>
+      </ul>
+
+      <h2>Honest limits</h2>
+      <p>
+        We are a small matching service, not a licensing board or a guarantor. We do not run formal background checks, we do not rank contractors against each other publicly, and we do not publish reviews or ratings. We connect you with one contractor and we are transparent that the working relationship, and the due diligence that comes with any major project, is between you and that contractor.
+      </p>
+    </div>
+
+    <section class="mt-12">
+      <CtaBand />
+    </section>
+  </div>
+</BaseLayout>

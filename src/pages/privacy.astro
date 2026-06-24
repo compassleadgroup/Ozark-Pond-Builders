@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE } from '../config';
+---
+
+<BaseLayout
+  title="Privacy Policy | Ozark Pond Builders"
+  description="How Ozark Pond Builders collects, uses, and shares the information you submit, your TCPA consent terms, and how to opt out or request deletion."
+  path="/privacy/"
+>
+  <div class="mx-auto max-w-3xl px-4 py-10">
+    <Breadcrumbs items={[{ name: 'Home', path: '/' }, { name: 'Privacy policy', path: '/privacy/' }]} />
+
+    <h1 class="mt-6 text-3xl sm:text-4xl font-bold text-stone-900">Privacy policy</h1>
+    <p class="mt-2 text-sm text-stone-500">Effective June 2026.</p>
+
+    <div class="prose prose-stone mt-8 max-w-none prose-a:text-emerald-800">
+      <p>
+        This Privacy Policy explains how information is collected, used, and shared through this website. It is operational guidance, not legal advice. Have this language reviewed by counsel before relying on it.
+      </p>
+
+      <h2>Who we are</h2>
+      <p>
+        Ozark Pond Builders is operated by {SITE.legalEntity} (the operator). We are a lead referral and matching service. We do not perform construction work. All pond, lake, dam, and excavation work is performed by independent, licensed contractors.
+      </p>
+
+      <h2>Information we collect</h2>
+      <p>
+        We collect only what a contractor needs to contact you and quote your project. Through the form on this site, that is:
+      </p>
+      <ul>
+        <li>Your name.</li>
+        <li>Your phone number and email address.</li>
+        <li>Your project location (town or county).</li>
+        <li>Your project type and a brief description you choose to provide.</li>
+        <li>Whether you checked the consent box.</li>
+      </ul>
+      <p>
+        Standard server and analytics data (such as pages viewed) may be collected through Google Analytics to understand site usage. We do not collect more than necessary.
+      </p>
+
+      <h2>How we use your information</h2>
+      <p>
+        We use the information you submit to connect you with one independent, licensed contractor who can contact you and quote your project, and to operate and improve the site. We do not sell your information.
+      </p>
+
+      <h2>How we share your information</h2>
+      <p>
+        When you submit the form, we share your submission with one independent, licensed contractor we match to your project, for the purpose of contacting and quoting your project. We may use service providers (for example, the form delivery service and analytics) that process data on our behalf. We do not sell your personal information to third parties.
+      </p>
+
+      <h2>TCPA consent</h2>
+      <p>
+        The consent checkbox on our form is unchecked by default and is not a condition of submitting an inquiry. If you check it, you agree that Ozark Pond Builders and the contractor you are matched with may contact you at the phone number and email you provided, including by automated dialing system, prerecorded voice, text message, and email, about your pond or excavation project. Consent is not a condition of any purchase or service. Message and data rates may apply. You can opt out at any time.
+      </p>
+
+      <h2>How to opt out or request deletion</h2>
+      <p>
+        You can opt out of contact at any time by telling us or the contractor directly, by replying STOP to a text message, or by asking to be removed. To opt out, or to request access to or deletion of the information you submitted, email us at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. We will act on reasonable requests as required by applicable law.
+      </p>
+
+      <h2>Data retention</h2>
+      <p>
+        We retain inquiry information only as long as needed to facilitate your match and as required for our records and applicable law, then dispose of it.
+      </p>
+
+      <h2>Contact for privacy requests</h2>
+      <p>
+        For any privacy question or request, contact {SITE.legalEntity} at <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+      </p>
+
+      <h2>Changes to this policy</h2>
+      <p>
+        We may update this policy. The effective date above reflects the most recent version.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

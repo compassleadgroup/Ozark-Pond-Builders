@@ -1,0 +1,91 @@
+---
+import { SITE, telHref } from '../config';
+
+// Footer entity disclaimer is the verbatim block from COMPLIANCE.md.
+const disclaimer =
+  'Ozark Pond Builders is operated by Compass Camper LLC, doing business as Compass Lead Group. We are a lead referral and matching service and do not perform construction work. All pond, lake, dam, and excavation work is performed by independent, licensed contractors. Contacting us connects you with one of those contractors.';
+
+const year = new Date().getFullYear();
+
+const services = [
+  { href: '/services/farm-and-stock-pond-construction/', label: 'Farm and stock pond construction' },
+  { href: '/services/recreational-lake-construction/', label: 'Recreational lake construction' },
+  { href: '/services/pond-dredging-and-renovation/', label: 'Pond dredging and renovation' },
+  { href: '/services/dam-construction-and-repair/', label: 'Dam construction and engineered repair' },
+];
+
+const guides = [
+  { href: '/guides/missouri-pond-permit-guide/', label: 'Missouri pond permit guide' },
+  { href: '/guides/farm-pond-vs-recreational-pond/', label: 'Farm pond vs recreational pond' },
+  { href: '/guides/pond-watershed-sizing/', label: 'Pond watershed sizing' },
+  { href: '/guides/will-my-pond-hold-water/', label: 'Will my pond hold water' },
+  { href: '/guides/cost-to-build-a-pond-in-missouri/', label: 'Cost to build a pond in Missouri' },
+  { href: '/guides/dam-safety-and-spillways/', label: 'Dam safety and spillways' },
+];
+
+const company = [
+  { href: '/about/', label: 'About' },
+  { href: '/how-we-vet-contractors/', label: 'How we vet contractors' },
+  { href: '/how-we-make-money/', label: 'How we make money' },
+  { href: '/locations/', label: 'Service area' },
+  { href: '/contact/', label: 'Contact' },
+  { href: '/privacy/', label: 'Privacy policy' },
+];
+---
+
+<footer class="mt-16 border-t border-stone-200 bg-stone-100 text-sm text-stone-700">
+  <div class="mx-auto max-w-6xl px-4 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <p class="font-bold text-emerald-900">Ozark Pond Builders</p>
+      <p class="mt-3 leading-relaxed">
+        A free matching service connecting southwest Missouri landowners with licensed local pond and excavation contractors.
+      </p>
+      <p class="mt-3">
+        {SITE.phone ? (
+          <a class="text-emerald-800 underline" href={telHref(SITE.phone)}>{SITE.phone}</a>
+        ) : (
+          <span class="text-stone-500">Phone coming soon</span>
+        )}
+      </p>
+      <p class="mt-1">
+        <a class="text-emerald-800 underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </p>
+    </div>
+
+    <nav aria-label="Services">
+      <p class="font-semibold text-stone-900">Services</p>
+      <ul class="mt-3 space-y-2">
+        {services.map((s) => (
+          <li><a class="hover:text-emerald-800 hover:underline" href={s.href}>{s.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav aria-label="Guides">
+      <p class="font-semibold text-stone-900">Guides</p>
+      <ul class="mt-3 space-y-2">
+        {guides.map((g) => (
+          <li><a class="hover:text-emerald-800 hover:underline" href={g.href}>{g.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav aria-label="Company">
+      <p class="font-semibold text-stone-900">Company</p>
+      <ul class="mt-3 space-y-2">
+        {company.map((c) => (
+          <li><a class="hover:text-emerald-800 hover:underline" href={c.href}>{c.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="border-t border-stone-200">
+    <div class="mx-auto max-w-6xl px-4 py-8">
+      <p class="leading-relaxed text-stone-600">{disclaimer}</p>
+      <p class="mt-4 text-stone-500">
+        &copy; {year} Ozark Pond Builders. Operated by {SITE.legalEntity}.
+      </p>
+    </div>
+  </div>
+</footer>

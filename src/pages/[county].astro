@@ -1,0 +1,97 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import AnswerBlock from '../components/AnswerBlock.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { publishedTownSlugs, townUrl } from '../lib/links';
+
+// County pages live at the site root (e.g. /greene-county-mo/). Only non-draft
+// counties generate a page, so a county with any open VERIFY field never publishes.
+export async function getStaticPaths() {
+  const counties = await getCollection('counties', ({ data }) => !data.draft);
+  return counties.map((entry) => ({
+    params: { county: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const towns = await getCollection('towns');
+const townName = new Map(towns.map((t) => [t.id, t.data.name]));
+const publishedTowns = await publishedTownSlugs();
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+
+const path = `/${entry.id}/`;
+---
+
+<BaseLayout title={d.title} description={d.description} path={path}>
+  <div class="mx-auto max-w-3xl px-4 py-10">
+    <Breadcrumbs
+      items={[
+        { name: 'Home', path: '/' },
+        { name: 'Service area', path: '/locations/' },
+        { name: d.name, path },
+      ]}
+    />
+
+    <h1 class="mt-6 text-3xl sm:text-4xl font-bold text-stone-900">{d.h1}</h1>
+
+    <div class="mt-6">
+      <AnswerBlock text={d.answer} />
+    </div>
+
+    <div class="prose prose-stone mt-8 max-w-none prose-a:text-emerald-800">
+      <Content />
+    </div>
+
+    <section class="mt-12 rounded-lg border border-stone-200 bg-white p-6">
+      <h2 class="text-xl font-bold text-stone-900">Local pond planning facts</h2>
+      <dl class="mt-4 space-y-4 text-sm">
+        <div><dt class="font-semibold text-stone-900">County seat</dt><dd class="text-stone-700">{d.county_seat}</dd></div>
+        <div><dt class="font-semibold text-stone-900">Primary drainages</dt><dd class="text-stone-700">{d.primary_drainages}</dd></div>
+        <div><dt class="font-semibold text-stone-900">Soils and water holding</dt><dd class="text-stone-700">{d.dominant_soils} {d.clay_suitability}</dd></div>
+        <div><dt class="font-semibold text-stone-900">Army Corps district (Section 404)</dt><dd class="text-stone-700">{d.usace_district}</dd></div>
+        <div><dt class="font-semibold text-stone-900">Soil and Water Conservation District</dt><dd class="text-stone-700">{d.swcd_office}</dd></div>
+        <div><dt class="font-semibold text-stone-900">Floodplain and grading</dt><dd class="text-stone-700">{d.floodplain_or_grading_note}</dd></div>
+      </dl>
+    </section>
+
+    {d.towns_in_set.length > 0 && (
+      <section class="mt-12">
+        <h2 class="text-xl font-bold text-stone-900">Towns in {d.name}</h2>
+        <ul class="mt-4 space-y-2">
+          {d.towns_in_set.map((slug) => (
+            <li><a class="text-emerald-800 hover:underline" href={townUrl(slug, publishedTowns)}>{townName.get(slug) ?? slug}</a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <section class="mt-12">
+      <h2 class="text-xl font-bold text-stone-900">Services in {d.name}</h2>
+      <ul class="mt-4 space-y-2">
+        {services.map((s) => (
+          <li><a class="text-emerald-800 hover:underline" href={`/services/${s.id}/`}>{s.data.serviceType}</a></li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="text-xl font-bold text-stone-900">Helpful guides</h2>
+      <ul class="mt-4 space-y-2">
+        <li><a class="text-emerald-800 hover:underline" href="/guides/missouri-pond-permit-guide/">Missouri pond permit guide</a></li>
+        <li><a class="text-emerald-800 hover:underline" href="/guides/pond-watershed-sizing/">Pond watershed sizing</a></li>
+        <li><a class="text-emerald-800 hover:underline" href="/guides/will-my-pond-hold-water/">Will my pond hold water</a></li>
+      </ul>
+    </section>
+
+    <section class="mt-12">
+      <LeadForm />
+    </section>
+  </div>
+</BaseLayout>
