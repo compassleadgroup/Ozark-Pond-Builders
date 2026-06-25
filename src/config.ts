@@ -20,9 +20,8 @@ export const SITE = {
   // TODO: CONFIG. Confirm or create this forwarding address on the domain.
   email: 'hello@ozarkpondbuilders.com',
 
-  // TODO: CONFIG. Paste the free Web3Forms access key. The lead form will not
-  // deliver submissions until this is set.
-  web3formsKey: '',
+  // Web3Forms access key (set). The lead form posts here to deliver submissions.
+  web3formsKey: '6c1fdafd-4db1-4aeb-b425-c924d811e0f7',
 
   // TODO: CONFIG. Paste the GA4 measurement id, e.g. 'G-XXXXXXXXXX'.
   // Analytics stays off until this is set.
