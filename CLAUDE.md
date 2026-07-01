@@ -2,6 +2,8 @@
 
 Persistent instructions for this repository. Read this file in full at the start of every session before editing anything. Also read `PROJECT_BRIEF.md` (why this site exists), `COMPLIANCE.md` (the authoritative compliance rules and verbatim copy blocks), `docs/content-data.md` (verified local data), and `docs/seo-spec.md` (keyword map, architecture, schema templates) before building or editing any page.
 
+Before adding, replacing, or wiring any image or visual asset, read the "Image and Visual Asset Standards" section of COMPLIANCE.md and apply it without exception.
+
 This is a rank-and-rent (local lead generation) site. We rank in classic organic search and route the leads to one local contractor for a fee. We are a matching service. We are not a contractor and we never perform work.
 
 ---

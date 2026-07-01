@@ -90,3 +90,48 @@ Confirm before any page or the site goes live:
 - No fabricated reviews, team, history, tenure, counts, awards, or misleading photos.
 - Every location page carries verified local data or is held in draft.
 - No em dashes anywhere.
+
+## Image and Visual Asset Standards
+
+Images are polish, not the conversion driver on a pre-tenant site. Use them
+sparingly. Every image added must earn its page weight against Core Web Vitals.
+
+### Allowed imagery
+- Generic residential homes and exteriors
+- Materials, tools, and work-in-progress shots with no identifiable faces
+- Local geography, landscape, or recognizable regional context
+- Diagrams and infographics (soil cycles, cross-sections, process flows)
+
+### Forbidden imagery
+- Any person framed as "our team," "our crew," or company staff
+- Happy-family or handshake stock cliches
+- Before/after photos unless real, documented, and consented (tenant-mode only)
+- Identifiable faces that imply Compass Camper LLC employs tradespeople
+- Specific job photos unless clearly framed as illustrative
+
+### Alt text
+- Descriptive, keyword plus location, no em dashes.
+- Pattern: "[subject] in [city], [state]" (e.g., "concrete foundation repair in Tulsa, Oklahoma")
+
+### Technical pipeline
+- Format WebP or AVIF, never PNG or JPG except logos and transparency graphics.
+- Hero images max 1920px width. Lazy-load everything below the fold.
+- Filename pattern: {keyword}-{width}w.webp (e.g., tulsa-foundation-repair-1920w.webp).
+- Keep total page weight under 1.5MB. LCP under 2.5s, CLS under 0.1.
+
+### Licensing and defensibility
+- Source only from free-license libraries: Pexels, Pixabay, or Unsplash.
+- Download and self-host. Never hotlink.
+- Log every image in image-licenses.md at repo root: source, license type,
+  original URL, and the page it is used on. Keep this even when attribution
+  is not legally required. It is cheap insurance if a site is ever scrutinized.
+
+### AI-generated images
+- Allowed only for abstract or illustrative backgrounds and diagrams.
+- Never to depict a specific real job, a real person, or anything that
+  falsely implies work performed by Compass Camper LLC.
+
+### Pre-tenant vs tenant-mode
+- Pre-tenant: illustrative imagery only, no real project galleries.
+- Real project photos enter only in tenant-mode with consent, per
+  TENANT_ACTIVATION_PLAYBOOK.md.
